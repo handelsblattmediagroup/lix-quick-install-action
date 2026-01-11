@@ -17,7 +17,7 @@ jobs:
           - ubuntu-24.04-arm
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: handelsblattmediagroup/lix-quick-install-action@v3.0.4
         with:
           lix_archives_url: https://github.com/handelsblattmediagroup/lix-quick-install-action/releases/download/v3.0.4
@@ -32,7 +32,7 @@ jobs:
         run: |
           nix build -L -f default.nix combinedArchives
           echo "result=$(readlink result)" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: lix-archives-${{ runner.os }}-${{ runner.arch }}
           path: ${{ steps.build-lix-archives.outputs.result }}/
@@ -51,8 +51,8 @@ jobs:
           - 2.91.3
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v6
         id: lix-archives
         with:
           name: lix-archives-${{ runner.os }}-${{ runner.arch }}
@@ -77,12 +77,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v6
         with:
           name: lix-archives-Linux-X64
           path: /tmp/archives
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: lix-archives-Linux-ARM64
           path: /tmp/archives

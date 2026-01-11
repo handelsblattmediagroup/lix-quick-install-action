@@ -13,7 +13,7 @@ jobs:
   flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: handelsblattmediagroup/lix-quick-install-action@v3
       - name: nix run
         run: nix run ./examples/flakes
@@ -21,7 +21,7 @@ jobs:
   npins:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: handelsblattmediagroup/lix-quick-install-action@v3
       - name: nix run
         run: nix run -f examples/npins
@@ -29,7 +29,7 @@ jobs:
   niv:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: handelsblattmediagroup/lix-quick-install-action@v3
       - name: nix run
         run: nix run -f examples/niv
@@ -37,7 +37,7 @@ jobs:
   pinned-fetchurl:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: handelsblattmediagroup/lix-quick-install-action@v3
       - name: nix run
         run: nix run -f examples/pinned-fetchurl
