@@ -17,11 +17,12 @@ jobs:
           - ubuntu-24.04-arm
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: handelsblattmediagroup/lix-quick-install-action@v3.0.4
+      - uses: actions/checkout@v7
+      # acuteaura: keep using upstream binaries to build our own
+      - uses: canidae-solutions/lix-quick-install-action@v5
         with:
-          lix_archives_url: https://github.com/handelsblattmediagroup/lix-quick-install-action/releases/download/v3.0.4
-          lix_version: 2.93.3
+          lix_archives_url: https://github.com/canidae-solutions/lix-quick-install-action/releases/download/v5.0.0
+          lix_version: 2.95.2
       - name: Fix Lix tests
         if: matrix.os == 'ubuntu-24.04-arm'
         run: |
@@ -32,7 +33,7 @@ jobs:
         run: |
           nix build -L -f default.nix combinedArchives
           echo "result=$(readlink result)" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: lix-archives-${{ runner.os }}-${{ runner.arch }}
           path: ${{ steps.build-lix-archives.outputs.result }}/
@@ -46,13 +47,12 @@ jobs:
           - ubuntu-22.04
           - ubuntu-24.04-arm
         version:
-          - 2.93.3
-          - 2.92.3
-          - 2.91.3
+          - 2.95.2
+          - 2.94.2
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v6
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         id: lix-archives
         with:
           name: lix-archives-${{ runner.os }}-${{ runner.arch }}
@@ -77,19 +77,19 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/download-artifact@v6
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         with:
           name: lix-archives-Linux-X64
           path: /tmp/archives
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v8
         with:
           name: lix-archives-Linux-ARM64
           path: /tmp/archives
       - uses: ./
         with:
           lix_archives_url: file:///tmp/archives
-          lix_version: 2.93.3
+          lix_version: 2.95.2
       - name: Build release script
         run: nix build -f default.nix releaseScript
       - name: Release if needed
